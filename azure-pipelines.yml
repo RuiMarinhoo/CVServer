@@ -9,7 +9,7 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '39774af0-1009-4bca-956d-8e4d0cbcfb94'
+  azureSubscription: '97034bdc-6b01-4599-9db2-d1b1ce3dca42'
   
   # Web app name
   webAppName: 'CVServer'
