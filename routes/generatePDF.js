@@ -8,7 +8,7 @@ const hb = require('handlebars')
 const readFile = utils.promisify(fs.readFile)
 
 
-router.get('/', async function (req, resp, next) {
+router.get('/', async function (req, res, next) {
 
     // let modelo = req.body.modelo;
 
@@ -17,13 +17,13 @@ router.get('/', async function (req, resp, next) {
     };
 
     getTemplateHtml('teste')
-        .then(async (res) => {
+        .then(async (resp) => {
             // Now we have the html code of our template in res object
             // you can check by logging it on console
             // console.log(res)
 
             console.log("Compiing the template with handlebars")
-            const template = hb.compile(res, { strict: true });
+            const template = hb.compile(resp, { strict: true });
             // we have compile our code with handlebars
             const result = template(data);
             // We can use this to add dyamic data to our handlebas template at run time from database or API as per need. you can read the official doc to learn more https://handlebarsjs.com/
@@ -76,7 +76,7 @@ router.get('/', async function (req, resp, next) {
                 console.log("PDF Removed");
             })
 
-            resp.status(200).send(contents);
+            res.send(contents);
 
         })
         .catch(err => {
