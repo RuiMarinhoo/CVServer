@@ -1,0 +1,293 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>A simple, clean, and responsive HTML invoice template</title>
+
+    <style>
+
+    html{
+        -webkit-print-color-adjust: exact;
+    }
+
+    body{
+        margin: 0;
+    }
+
+    .page{
+        width: 800px;
+        max-width: 800px;
+        position: relative;
+        margin-right: auto;
+        margin-left: auto;
+        /*border: 2px solid;*/
+        /*height: 1122px;*/
+    }
+
+    .header-box {
+        max-width: 800px;
+        margin-top: 0px;
+        margin-right: auto;
+        margin-left: auto;
+        padding: 0 30px 0 30px;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+    }
+
+    .header-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+    }
+
+    .invoice-box {
+        max-width: 800px;
+        margin: auto;
+        padding: 10px 30px 10px 30px;
+        /*border: 1px solid #eee;*/
+        /*box-shadow: 0 0 10px rgba(0, 0, 0, .15);*/
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+    }
+
+    .footer {
+        max-width: 800px;
+        margin: auto;
+        padding: 30px;
+        /*border: 1px solid #eee;*/
+        /*box-shadow: 0 0 10px rgba(0, 0, 0, .15);*/
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+    }
+
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+        margin-bottom: 20px;
+        border: 0;
+        border-collapse: collapse;
+        /*box-shadow: 0 0 10px rgba(0, 0, 0, .15);*/
+    }
+
+    .invoice-box table tr{
+        page-break-inside: avoid;
+        /*display: block;*/
+    }
+
+    .invoice-box table td {
+        padding: 0 5px;
+        vertical-align: top;
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .invoice-box table .data {
+        color: #55A1D8;
+    }
+
+    .invoice-box table tr table tr td:nth-child(1) {
+        width: 60px;
+    }
+    .invoice-box table tr table tr td:nth-child(2) {
+        width: 40px;
+    }
+    .invoice-box table tr table tr td:nth-child(3) {
+        width: 140px;
+    }
+    .invoice-box table tr table tr td:nth-child(4) {
+        width: 100px;
+    }
+
+    .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #333;
+    }
+
+    .invoice-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+    .invoice-box .information {
+        padding-bottom: 40px;
+    }
+
+    .invoice-box table tr.heading td {
+        background: #d4e7f5;
+        color: #2C5AA9;
+        border-bottom: 0;
+        font-weight: bold;
+        font-size: 9pt;
+    }
+
+    .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    }
+
+    /*.invoice-box table tr.item td{*/
+    /*    border-bottom: 1px solid #eee;*/
+    /*}*/
+    .invoice-box table tr.item td{
+        font-size: 7pt;
+    }
+    .invoice-box table tr.line{
+        border-bottom: 1px solid #55A1D8;
+    }
+
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+
+        .invoice-box table tr.information table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+    }
+
+    /** RTL **/
+    .rtl {
+        direction: rtl;
+        font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+
+    .rtl table {
+        text-align: right;
+    }
+
+    .rtl table tr td:nth-child(2) {
+        text-align: left;
+    }
+
+    .dot {
+        height: 9px;
+        width: 9px;
+        margin-right: 7px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .greenDot {
+        background-color: #5bc445;
+    }
+    .redDot {
+        background-color: #fc6363;
+    }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="header-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td style="font-size: 9pt;">
+                                <strong>{{nome}}</strong><br>
+                                Mês: Jan<br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <table cellpadding="0" cellspacing="0">
+                        <tr class="heading" style="margin-right: 50px">
+                          <td>Data</td>
+                          <td>Hora</td>
+                          <td>Status</td>
+                          <td>Utilizador</td>
+                        </tr>
+                    </table>
+                    <table cellpadding="0" cellspacing="0">
+                        <tr class="item">
+                            <td class="data">23/11/2020</td>
+                            <td>13:30</td>
+                            <td><span class="dot greenDot"></span>Incidente Abertura</td>
+                            <td>Segurvez</td>
+                        </tr>
+                        <tr class="item">
+                            <td class="data">23/11/2020</td>
+                            <td>13:30</td>
+                            <td><span class="dot greenDot"></span>Incidente Abertura</td>
+                            <td>Segurvez</td>
+                        </tr>
+                        <tr class="item">
+                            <td class="data">23/11/2020</td>
+                            <td>13:30</td>
+                            <td><span class="dot greenDot"></span>Incidente Abertura</td>
+                            <td>Segurvez</td>
+                        </tr>
+                        <tr class="item">
+                            <td class="data">23/11/2020</td>
+                            <td>13:30</td>
+                            <td><span class="dot greenDot"></span>Incidente Abertura</td>
+                            <td>Segurvez</td>
+                        </tr>
+                        <tr class="item">
+                            <td class="data">23/11/2020</td>
+                            <td>13:30</td>
+                            <td><span class="dot greenDot"></span>Incidente Abertura</td>
+                            <td>Segurvez</td>
+                        </tr>
+                        <tr class="item">
+                            <td class="data">23/11/2020</td>
+                            <td>13:30</td>
+                            <td><span class="dot greenDot"></span>Incidente Abertura</td>
+                            <td>Segurvez</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table cellpadding="0" cellspacing="0">
+                        <tr class="heading" style="margin-right: 50px">
+                            <td>Data</td>
+                            <td>Hora</td>
+                            <td>Status</td>
+                            <td>Utilizador</td>
+                        </tr>
+                    </table>
+                <td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
