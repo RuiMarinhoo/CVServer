@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
+const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const generatePDF = require('./routes/generatePDF');
 
@@ -12,6 +13,7 @@ const app = express()
     .use(express.urlencoded({extended: true}))
     .use(express.json({limit: '50mb'}))
     .use(express.static(path.join(__dirname, 'public')))
+    .use("/", indexRouter())
     .use("/users", usersRouter())
     .use("/generatePDF", generatePDF());
 
