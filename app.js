@@ -15,7 +15,8 @@ const app = express()
     .use("/users", usersRouter())
     .use("/generatePDF", generatePDF());
 
-const server = app.listen(port, () => {
+
+app.listen(port, () => {
   console.log(`Express server listening on port ${port}`);
 });
 
