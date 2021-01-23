@@ -5,8 +5,7 @@ function createRouter() {
 
   router.get('/', function (req, res, next) {
 
-    // res.send('Node Express');
-    res.render('index', { title: 'Express' });
+    res.send('Node Express');
 
   });
 
