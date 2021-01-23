@@ -7,7 +7,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const generateCV = require('./routes/generatePDF');
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const app = express()
     .use(cors())
