@@ -35,10 +35,8 @@ function createRouter() {
                     headless: true,
                     defaultViewport: null,
                     args: [
-                        "--incognito",
-                        "--no-sandbox",
-                        "--single-process",
-                        "--no-zygote"
+                        '--no-sandbox',
+                        '--disable-setuid-sandbox',
                     ]
                 }
                 // we are using headless mode
