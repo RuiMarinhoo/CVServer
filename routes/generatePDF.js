@@ -90,7 +90,7 @@ function createRouter() {
 
     });
 
-    router.post('/render', async function (req, resp, next) {
+    router.get('/render', async function (req, resp, next) {
 
 
         // let modelo = req.body.modelo;
