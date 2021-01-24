@@ -93,27 +93,15 @@ function createRouter() {
     router.post('/render', async function (req, resp, next) {
 
 
-        let modelo = req.body.modelo;
-
-        if (modelo === 'DJ1' && req.body.param4 === '')
-            modelo = 'DJ1.1'
+        // let modelo = req.body.modelo;
 
 
         let data = {
-            dataTicket: req.body.dataTicket,
-            numServico: req.body.numServico,
-            referencia: req.body.referencia,
-            param1: req.body.param1,
-            param2: req.body.param2,
-            param3: req.body.param3,
-            param4: req.body.param4,
-            param5: req.body.param5,
-            nomecliente: req.body.nomecliente,
-            nomelocal: req.body.nomelocal
+            nome: 'Rui',
         };
 
 
-        getTemplateHtml(modelo)
+        getTemplateHtml('teste')
             .then(async (res) => {
                 // Now we have the html code of our template in res object
                 // you can check by logging it on console
