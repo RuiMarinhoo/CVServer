@@ -10,15 +10,16 @@ const readFile = utils.promisify(fs.readFile)
 function createRouter() {
     const router = express.Router();
 
-    router.get('/', async function (req, res, next) {
+    router.post('/', async function (req, res, next) {
 
-        // let modelo = req.body.modelo;
+        let modelo = req.body.modelo;
 
-        let data = {
-            nome: 'RUI'
-        };
+        // let data = {
+        //     nome: 'RUI'
+        // };
+        let data = req.body.data;
 
-        getTemplateHtml('teste')
+        getTemplateHtml(modelo)
             .then(async (resp) => {
                 // Now we have the html code of our template in res object
                 // you can check by logging it on console
@@ -86,22 +87,23 @@ function createRouter() {
             })
             .catch(err => {
                 console.error(err)
+                res.send('');
             });
 
     });
 
-    router.get('/render', async function (req, resp, next) {
+    router.post('/render', async function (req, resp, next) {
 
 
-        // let modelo = req.body.modelo;
+        let modelo = req.body.modelo;
 
 
-        let data = {
-            nome: 'Rui',
-        };
+        // let data = {
+        //     nome: 'Rui',
+        // };
+        let data = req.body.data;
 
-
-        getTemplateHtml('teste')
+        getTemplateHtml(modelo)
             .then(async (res) => {
                 // Now we have the html code of our template in res object
                 // you can check by logging it on console
@@ -122,7 +124,8 @@ function createRouter() {
             })
             .catch(err => {
                 console.error(err)
-                resp.sendStatus(500);
+                // resp.sendStatus(500);
+                resp.send('');
             });
 
     });
@@ -136,8 +139,8 @@ async function getTemplateHtml(modelo) {
 
     console.log("Loading template file in memory")
     try {
-        // const invoicePath = path.resolve("./routes/layout/" + modelo + ".html");
-        const invoicePath = path.resolve("./routes/layout/invoice.html");
+        const invoicePath = path.resolve("./routes/layout/" + modelo + ".html");
+        // const invoicePath = path.resolve("./routes/layout/f1.html");
         return await readFile(invoicePath, 'utf8');
     } catch (err) {
         return Promise.reject("Could not load html template");

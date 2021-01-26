@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>A simple, clean, and responsive HTML CV template</title>
+
+    <style>
+
+        html{
+            -webkit-print-color-adjust: exact;
+            width: 595px;
+            height: 842px;
+            margin-right: auto;
+            margin-left: auto;
+            overflow: hidden;
+        }
+
+        body{
+            margin: 0;
+        }
+
+        .page{
+            display: flex;
+            font-size: 8pt;
+            position: relative;
+            background-color: white;
+            padding: 15px;
+            /*border: 2px solid;*/
+            overflow: hidden;
+        }
+
+        .title{
+            font-size: 12pt;
+            color: #03a8ff;
+            font-weight: bold;
+        }
+
+
+        .leftSide{
+            width: 170px;
+            /*background-color: red;*/
+        }
+        .leftSide .photo{
+            width: 100%;
+        }
+        .leftSide .photo img{
+            width: 150px;
+            height: 150px;
+            margin-left: 25px;
+        }
+
+
+        .leftSide .info{
+            width: 100%;
+            text-align: right;
+        }
+
+
+        .name{
+            font-size: 14pt;
+            font-weight: bold;
+        }
+        .userinfo{
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .userinfo .icon{
+            width: 25px;
+            height: 25px;
+            margin-left: 25px;
+        }
+
+
+        .dots{
+            height: 15px;
+            width: 15px;
+            margin-left: 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dotActive{
+            background-color: #03a8ff;
+        }
+
+        .qualidade{
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .qualidade p{
+            margin: 0;
+        }
+        .qualidade .checkmark {
+            display:inline-block;
+            width: 22px;
+            height:22px;
+            -ms-transform: rotate(45deg); /* IE 9 */
+            -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+            transform: rotate(45deg);
+        }
+        .qualidade .checkmark_stem {
+            position: absolute;
+            width:3px;
+            height:9px;
+            background-color: #03a8ff;
+            left:11px;
+            top:6px;
+        }
+        .qualidade .checkmark_kick {
+            position: absolute;
+            width:3px;
+            height:3px;
+            background-color: #03a8ff;
+            left:8px;
+            top:12px;
+        }
+
+
+        .rightSide{
+            width: 380px;
+            /*background-color: blue;*/
+            margin-left: 10px;
+            display: flex;
+        }
+
+        .rightSide .line{
+            width: 2px;
+            height: 812px;
+            border-radius: 2px;
+            background-color: #aeb4b7;
+        }
+
+        .rightSide .info{
+            margin-left: 15px;
+            max-width: 355px;
+        }
+
+        .educacao .educacaoInfo p, .rightSide .info .experiencia .experienciaInfo p{
+            margin: 5px 0;
+        }
+
+        .certificados ul{
+            padding: 0px 0px 0px 12px;
+        }
+
+        .hobbies .allHobbies{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .hobbies .allHobbies .hobbieInfo{
+            margin-right: 15px;
+            text-align: center;
+        }
+        .hobbies .allHobbies .hobbieInfo img{
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="leftSide">
+        <div class="photo">
+            <img src="https://pocosdaserra.com/assets/img/empty-avatar.png?h=9fd640d37535cccffab9d5957bdf43ba">
+        </div>
+        <div class="info">
+
+            <p class="name">{{name}}</p>
+
+            <div class="userinfo">
+                <p class="morada">{{address}}</p>
+                <img class="icon" src="https://pocosdaserra.com/assets/img/empty-avatar.png?h=9fd640d37535cccffab9d5957bdf43ba">
+            </div>
+
+            <div class="userinfo">
+                <p class="morada">{{phone}}</p>
+                <img class="icon" src="https://pocosdaserra.com/assets/img/empty-avatar.png?h=9fd640d37535cccffab9d5957bdf43ba">
+            </div>
+
+            <div class="userinfo">
+                <p class="morada">{{email}}</p>
+                <img class="icon" src="https://pocosdaserra.com/assets/img/empty-avatar.png?h=9fd640d37535cccffab9d5957bdf43ba">
+            </div>
+
+
+            <div class="linguas">
+                <p class="title">abc</p>
+                <p>lingua</p>
+                <div class="dots dotActive"></div>
+                <div class="dots dotActive"></div>
+                <div class="dots dotActive"></div>
+                <div class="dots"></div>
+                <div class="dots"></div>
+                <div class="dots"></div>
+            </div>
+
+
+            <div class="personalidade">
+                <p class="title">abc</p>
+                <div class="qualidade">
+                    <p>word</p>
+                    <span class="checkmark">
+                        <div class="checkmark_stem"></div>
+                        <div class="checkmark_kick"></div>
+                    </span>
+                </div>
+            </div>
+
+            <div class="hobbies">
+                <p class="title">hobbies</p>
+                <div class="allHobbies">
+                    <div class="hobbieInfo">
+                        <img class="icon" src="https://pocosdaserra.com/assets/img/empty-avatar.png?h=9fd640d37535cccffab9d5957bdf43ba">
+                        <p class="morada">Bola</p>
+                    </div>
+                    <div class="hobbieInfo">
+                        <img class="icon" src="https://pocosdaserra.com/assets/img/empty-avatar.png?h=9fd640d37535cccffab9d5957bdf43ba">
+                        <p class="morada">Bola</p>
+                    </div>
+
+                    <div class="hobbieInfo">
+                        <img class="icon" src="https://pocosdaserra.com/assets/img/empty-avatar.png?h=9fd640d37535cccffab9d5957bdf43ba">
+                        <p class="morada">Bola</p>
+                    </div>
+                    <div class="hobbieInfo">
+                        <img class="icon" src="https://pocosdaserra.com/assets/img/empty-avatar.png?h=9fd640d37535cccffab9d5957bdf43ba">
+                        <p class="morada">Bola</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="rightSide">
+        <div class="line"></div>
+        <div class="info">
+
+            <div class="perfil">
+                <p class="title">perfil</p>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book.</p>
+            </div>
+
+            <div class="educacao">
+                <p class="title">educação</p>
+                <div class="educacaoInfo">
+                    <p>2019 - 2020</p>
+                    <p><strong>IPVC</strong></p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                        and scrambled it to make a type specimen book.</p>
+                </div>
+            </div>
+
+            <div class="experiencia">
+                <p class="title">experiência profissional</p>
+                <div class="experienciaInfo">
+                    <p>2019 - 2020</p>
+                    <p><strong>IPVC</strong></p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                        and scrambled it to make a type specimen book.</p>
+                </div>
+            </div>
+
+            <div class="certificados">
+                <p class="title">certificados</p>
+                <ul>
+                    <li>Lorem Ipsum is simply dummy text of the printing</li>
+                    <li>Lorem Ipsum is simply dummy text of the printing</li>
+                </ul>
+            </div>
+
+            <div class="skills">
+                <p class="title">abc</p>
+                <p>word</p>
+                <div class="dots dotActive"></div>
+                <div class="dots dotActive"></div>
+                <div class="dots dotActive"></div>
+                <div class="dots"></div>
+                <div class="dots"></div>
+                <div class="dots"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
