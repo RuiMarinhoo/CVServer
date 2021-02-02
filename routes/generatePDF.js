@@ -101,7 +101,13 @@ function createRouter() {
         // let data = {
         //     nome: 'Rui',
         // };
-        let data = req.body.data;
+        // let data = req.body.data;
+        let data = {
+            left: req.body.data.left,
+            right: req.body.data.right
+        };
+
+        // console.log(data);
 
         getTemplateHtml(modelo)
             .then(async (res) => {
