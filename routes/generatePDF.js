@@ -125,7 +125,28 @@ function createRouter() {
                 const html = result;
 
 
-                resp.send(html);
+                // resp.send(html);
+
+                const chromeOptions = {
+                    headless: true,
+                    defaultViewport: null,
+                    args: [
+                        '--no-sandbox',
+                        '--disable-setuid-sandbox',
+                    ]
+                }
+                // we are using headless mode
+                const browser = await puppeteer.launch(chromeOptions);
+                const page = await browser.newPage();
+
+                // We set the page content as the generated html by handlebars
+                await page.setContent(html);
+                await page.setViewport({width: 595, height: 842});
+                await page.screenshot({path: 'example.jpg'})
+                await browser.close()
+
+                const contents = await base64_encode('example.jpg');
+                resp.send(contents);
 
             })
             .catch(err => {
