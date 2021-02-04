@@ -17,7 +17,10 @@ function createRouter() {
         // let data = {
         //     nome: 'RUI'
         // };
-        let data = req.body.data;
+        let data = {
+            left: req.body.data.left,
+            right: req.body.data.right
+        };
 
         getTemplateHtml(modelo)
             .then(async (resp) => {
@@ -54,7 +57,7 @@ function createRouter() {
                 // });
 
                 // we Use pdf function to generate the pdf in the same folder as this file.
-                await page.pdf( {
+                const pdf = await page.pdf( {
                     path: 'teste.pdf',
                     format: 'A4',
                     printBackground: true,
@@ -65,10 +68,10 @@ function createRouter() {
                         right: 0,
                         left: 0,
                     },
+                    scale: 1.5
                 })
                 // const contents = await fs.readFile('invoice.pdf', {encoding: 'base64'});
                 const contents = await base64_encode('teste.pdf');
-
                 await browser.close();
                 console.log("PDF Generated")
 
@@ -143,9 +146,17 @@ function createRouter() {
                 await page.setContent(html);
                 await page.setViewport({width: 595, height: 842});
                 await page.screenshot({path: 'example.jpg'})
+                const contents = await base64_encode('example.jpg');
                 await browser.close()
 
-                const contents = await base64_encode('example.jpg');
+
+                fs.unlink('example.jpg', (err) => {
+                    if (err) {
+                        console.error(err)
+                        return
+                    }
+                })
+
                 resp.send(contents);
 
             })
