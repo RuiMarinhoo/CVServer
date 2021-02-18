@@ -153,11 +153,11 @@ function createRouter() {
                     accum += '<div class="dots"></div>';
                 }
             }
-            console.log(accum);
+            // console.log(accum);
             return accum;
         });
 
-        console.log(req.body);
+        // console.log(req.body);
 
         getTemplateHtml(modelo)
             .then(async (res) => {
