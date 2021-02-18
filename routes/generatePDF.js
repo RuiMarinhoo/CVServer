@@ -22,6 +22,8 @@ function createRouter() {
             right: req.body.data.right
         };
 
+        console.log(data);
+
         getTemplateHtml(modelo)
             .then(async (resp) => {
                 // Now we have the html code of our template in res object
@@ -110,7 +112,52 @@ function createRouter() {
             right: req.body.data.right
         };
 
-        // console.log(data);
+        hb.registerHelper('ifCond', function (v1, v2, options) {
+            if (v1 === v2){
+                return true;
+            }
+            else{
+                return false;
+            }
+        });
+        hb.registerHelper('oneCondIf', function (v1, options) {
+            if ((v1 === "contact") || (v1 === "email") || (v1 === "address")){
+                return true;
+            }
+            else{
+                return false;
+            }
+        });
+        hb.registerHelper('oneCondIfTitle', function (v1, options) {
+            console.log(options.data.root[v1])
+            if (options.data.root[v1]){
+                options.data.root[v1] = false;
+                return true;
+            }
+            else{
+                return false;
+            }
+        });
+        hb.registerHelper("setVar", function(varName, varValue, options) {
+            console.log(varName + ' - ' + varValue);
+            options.data.root[varName] = varValue;
+        });
+
+        hb.registerHelper('for', function(from, to, incr, value, block) {
+            var accum = '';
+            for(var i = from; i < to; i += incr){
+                if (value > i){
+                    accum += '<div class="dots dotActive"></div>';
+                }
+                else{
+                    accum += '<div class="dots"></div>';
+                }
+            }
+            console.log(accum);
+            return accum;
+        });
+
+        console.log(req.body);
 
         getTemplateHtml(modelo)
             .then(async (res) => {
