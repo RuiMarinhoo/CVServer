@@ -16,5 +16,5 @@ jobs:
       run: docker build . -t ruimmarinho/cvserver:latest
     - name: push image to docker hub
       run: |
-        docker login -u ruimmarinho -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker login --username ruimmarinho --password ${{ secrets.DOCKER_HUB_TOKEN }}
         docker push ruimmarinho/cvserver:latest
