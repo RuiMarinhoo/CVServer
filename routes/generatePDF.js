@@ -177,14 +177,23 @@ function createRouter() {
 
                 // resp.send(html);
 
+                // Running without docker
+                // const chromeOptions = {
+                //     headless: true,
+                //     defaultViewport: null,
+                //     args: [
+                //         '--no-sandbox',
+                //         '--disable-setuid-sandbox',
+                //     ]
+                // }
+                // Running with docker
                 const chromeOptions = {
-                    headless: true,
-                    defaultViewport: null,
-                    args: [
-                        '--no-sandbox',
-                        '--disable-setuid-sandbox',
-                    ]
-                }
+                    executablePath: '/usr/bin/google-chrome',
+                    headless: 'new',
+                    ignoreDefaultArgs: ['--disable-extensions'],
+                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                };
+
                 // we are using headless mode
                 const browser = await puppeteer.launch(chromeOptions);
                 const page = await browser.newPage();
