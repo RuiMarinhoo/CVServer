@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cv-backend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
