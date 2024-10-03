@@ -1,4 +1,4 @@
-FROM node:16-alpine as build
+FROM node:slim
 
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
