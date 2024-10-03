@@ -7,15 +7,14 @@ on:
     branches: [ "master" ]
 
 jobs:
-
-  build:
-
+  publish_image:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     
-    - name: Run docker-compose
-      uses: hoverkraft-tech/compose-action@v2.0.1
-      with:
-        docker_compose: "./docker-compose.yml"
+    - name: build image
+      run: docker build . -t ruimmarinho/cvserver:latest
+    - name: push image to docker hub
+      run: |
+        docker login -u ruimmarinho -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker push ruimmarinho/cvserver:latest
