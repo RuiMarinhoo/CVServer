@@ -112,6 +112,10 @@ function createRouter() {
             right: req.body.data.right
         };
 
+        hb.registerHelper('content', function(string) {
+            return "<div style=\"color: red;\">test</div> 123";
+        });
+
         hb.registerHelper('ifCond', function (v1, v2, options) {
             if (v1 === v2){
                 return true;
