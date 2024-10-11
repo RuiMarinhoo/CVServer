@@ -4,6 +4,7 @@ const path = require('path')
 const utils = require('util')
 const puppeteer = require('puppeteer')
 const hb = require('handlebars')
+const {photo_component, text_component, skills_component, topics_component, icons_component} = require("./cv-components");
 const readFile = utils.promisify(fs.readFile)
 
 
@@ -12,19 +13,30 @@ function createRouter() {
 
     router.post('/', async function (req, res, next) {
 
-        let modelo = req.body.modelo;
+        const layout_cv = req.body
+
+        let model = layout_cv.type;
+
 
         // let data = {
-        //     nome: 'RUI'
+        //     nome: 'Rui',
         // };
+        // let data = req.body.data;
         let data = {
-            left: req.body.data.left,
-            right: req.body.data.right
+            left: await getHtmlComponents(layout_cv.columns[0].components),
+            right: await getHtmlComponents(layout_cv.columns[1].components),
         };
 
-        console.log(data);
+        // console.log(data);
 
-        getTemplateHtml(modelo)
+        hb.registerHelper('content_left', function(string) {
+            return data.left;
+        });
+        hb.registerHelper('content_right', function(string) {
+            return data.right;
+        });
+
+        getTemplateHtml(model)
             .then(async (resp) => {
                 // Now we have the html code of our template in res object
                 // you can check by logging it on console
@@ -99,8 +111,9 @@ function createRouter() {
 
     router.post('/render', async function (req, resp, next) {
 
+        const layout_cv = req.body
 
-        let modelo = req.body.modelo;
+        let model = layout_cv.type;
 
 
         // let data = {
@@ -108,62 +121,20 @@ function createRouter() {
         // };
         // let data = req.body.data;
         let data = {
-            left: req.body.data.left,
-            right: req.body.data.right
+            left: await getHtmlComponents(layout_cv.columns[0].components),
+            right: await getHtmlComponents(layout_cv.columns[1].components),
         };
-
-        hb.registerHelper('content', function(string) {
-            return "<div style=\"color: red;\">test</div> 123";
-        });
-
-        hb.registerHelper('ifCond', function (v1, v2, options) {
-            if (v1 === v2){
-                return true;
-            }
-            else{
-                return false;
-            }
-        });
-        hb.registerHelper('oneCondIf', function (v1, options) {
-            if ((v1 === "contact") || (v1 === "email") || (v1 === "address")){
-                return true;
-            }
-            else{
-                return false;
-            }
-        });
-        hb.registerHelper('oneCondIfTitle', function (v1, options) {
-            console.log(options.data.root[v1])
-            if (options.data.root[v1]){
-                options.data.root[v1] = false;
-                return true;
-            }
-            else{
-                return false;
-            }
-        });
-        hb.registerHelper("setVar", function(varName, varValue, options) {
-            console.log(varName + ' - ' + varValue);
-            options.data.root[varName] = varValue;
-        });
-
-        hb.registerHelper('for', function(from, to, incr, value, block) {
-            var accum = '';
-            for(var i = from; i < to; i += incr){
-                if (value > i){
-                    accum += '<div class="dots dotActive"></div>';
-                }
-                else{
-                    accum += '<div class="dots"></div>';
-                }
-            }
-            // console.log(accum);
-            return accum;
-        });
 
         // console.log(req.body);
 
-        getTemplateHtml(modelo)
+        hb.registerHelper('content_left', function(string) {
+            return data.left;
+        });
+        hb.registerHelper('content_right', function(string) {
+            return data.right;
+        });
+
+        getTemplateHtml(model)
             .then(async (res) => {
                 // Now we have the html code of our template in res object
                 // you can check by logging it on console
@@ -184,7 +155,9 @@ function createRouter() {
                 // Running without docker
                 const chromeOptions = {
                     headless: true,
+                    // headless: false,
                     defaultViewport: null,
+                    devtools: true,
                     args: [
                         '--no-sandbox',
                         '--disable-setuid-sandbox',
@@ -204,9 +177,13 @@ function createRouter() {
 
                 // We set the page content as the generated html by handlebars
                 await page.setContent(html);
+                // await page.addStyleTag({ path: './public/css/style.css'});
                 await page.setViewport({width: 595, height: 842});
                 await page.screenshot({path: 'example.jpg'})
                 const contents = await base64_encode('example.jpg');
+                // setTimeout(async () => {
+                //     await browser.close()
+                // }, 50000)
                 await browser.close()
 
 
@@ -233,16 +210,47 @@ function createRouter() {
 module.exports = createRouter;
 
 
-async function getTemplateHtml(modelo) {
+async function getTemplateHtml(model) {
 
     console.log("Loading template file in memory")
     try {
-        const invoicePath = path.resolve("./routes/layout/" + modelo + ".html");
+        const invoicePath = path.resolve("./routes/layout/" + model + ".html");
         // const invoicePath = path.resolve("./routes/layout/f1.html");
         return await readFile(invoicePath, 'utf8');
     } catch (err) {
         return Promise.reject("Could not load html template");
     }
+}
+
+async function getHtmlComponents(components) {
+
+    let toHtml = ''
+    components.forEach(component => {
+        if(component.value){
+            if(component.type === 'photo'){
+                const component_photo = component.value
+                toHtml += photo_component(component_photo)
+            }
+            if(component.type === 'text' || component.type === 'simple-text'){
+                const component_text = component.value
+                toHtml += text_component(component_text)
+            }
+            if(component.type === 'list-skills'){
+                const component_skills = component.value
+                toHtml += skills_component(component_skills)
+            }
+            if(component.type === 'list-topics'){
+                const component_topics = component.value
+                toHtml += topics_component(component_topics)
+            }
+            if(component.type === 'list-icons'){
+                const component_icons = component.value
+                toHtml += icons_component(component_icons)
+                console.log(toHtml)
+            }
+        }
+    })
+    return toHtml
 }
 
 
