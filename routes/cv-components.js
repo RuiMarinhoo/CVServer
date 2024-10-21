@@ -1,37 +1,43 @@
+
+content_aligns = [{
+    id: 0,
+    value: 'justify-content: flex-start;'
+}, {
+    id: 1,
+    value: 'justify-content: center;'
+}, {
+    id: 2,
+    value: 'justify-content: flex-end;'
+}, {
+    id: 3,
+    value: 'justify-content: space-between;'
+}];
+text_aligns = [{
+    id: 0,
+    value: 'text-align: left;'
+}, {
+    id: 1,
+    value: 'text-align: center;'
+}, {
+    id: 2,
+    value: 'text-align: right;'
+}, {
+    id: 3,
+    value: 'text-align: left;'
+}];
+
 function photo_component(component) {
     const img_src = component.value
-    let container_style = '';
-    switch (component.align_value){
-        case 0:
-            container_style = 'justify-content: flex-start;';
-            break;
-        case 1:
-            container_style = 'justify-content: center;';
-            break;
-        case 2:
-            container_style = 'justify-content: flex-end;';
-            break;
-    }
+    let container_style = content_aligns.find(a => a.id === component.align_value).value;
     let img_style = component.round ? 'border-radius: 50%;' : '';
 
-    return `<div style="display: flex; width: 100%; ${container_style}">
+    return `<div class="photo" style="display: flex; width: 100%; ${container_style}">
         <img src="${img_src}" alt="profile" style="width: 150px; height: 150px; ${img_style}">
     </div>`;
 }
 
 function text_component(component) {
-    let container_style = '';
-    switch (component.align_value){
-        case 0:
-            container_style = 'text-align: left;';
-            break;
-        case 1:
-            container_style = 'text-align: center;';
-            break;
-        case 2:
-            container_style = 'text-align: right;';
-            break;
-    }
+    let container_style = text_aligns.find(a => a.id === component.align_value).value;
     const title_style = component.show_title ? '' : 'display: none;';
     const text_style = component.show_title ? '' : 'font-size: 12pt; font-weight: bold; margin-top: 0.8rem; margin-bottom: 0.5rem;';
     return `<div style="display: flex; flex-direction: column; width: 100%; ${container_style}">
@@ -41,39 +47,17 @@ function text_component(component) {
 }
 
 function skills_component(component) {
-    let title_style = '';
-    switch (component.align_value){
-        case 0:
-            title_style = 'justify-content: flex-start;';
-            break;
-        case 1:
-            title_style = 'justify-content: center;';
-            break;
-        case 2:
-            title_style = 'justify-content: flex-end;';
-            break;
-    }
+    let title_style = content_aligns.find(a => a.id === component.align_value).value;
     let component_html = `<div style="display: flex; flex-direction: column; width: 100%;">
         <div style="display: flex; width: 100%; ${title_style}">
             <p class="title">${component.title}</p>
         </div>`;
     component.list.forEach(line => {
-        let value_style = '';
-        switch (line.align_value){
-            case 0:
-                value_style = 'justify-content: flex-start;';
-                break;
-            case 1:
-                value_style = 'justify-content: center;';
-                break;
-            case 2:
-                value_style = 'justify-content: flex-end;';
-                break;
-        }
+        let value_style = content_aligns.find(a => a.id === line.align_value).value;
         let value_dots_style = line.dots_value ? '' : 'display: none;';
         value_dots_style += line.break_value ? 'flex-basis: 100%;' : '';
         component_html += `<div style="display: flex; ${value_style}">
-            <div style="display: flex; flex-flow: wrap; ${value_style}">
+            <div style="display: flex; flex-flow: wrap; width: 100%; ${value_style}">
                 <div class="text_value" style="margin-right: 5px;">${line.text}</div>
                 <div style="display: flex; margin-top: 2px; ${value_style} ${value_dots_style}">
                     <div class="dots ${line.value >= 1 ? 'dotActive' : ''}"></div>
@@ -86,54 +70,27 @@ function skills_component(component) {
         </div>`
     })
     component_html += `</div>`;
+    // console.log(component_html)
     return component_html;
 }
 
 function topics_component(component) {
-    let title_style = '';
-    switch (component.align_value){
-        case 0:
-            title_style = 'justify-content: flex-start;';
-            break;
-        case 1:
-            title_style = 'justify-content: center;';
-            break;
-        case 2:
-            title_style = 'justify-content: flex-end;';
-            break;
-    }
+    let title_style = content_aligns.find(a => a.id === component.align_value).value;
     let component_html = `<div style="display: flex; flex-direction: column; width: 100%;">
         <div style="display: flex; width: 100%; ${title_style}">
             <p class="title">${component.title}</p>
         </div>`;
     component.list.forEach(line => {
-        let value_style = '';
-        let text_style = '';
-        switch (line.align_value){
-            case 0:
-                value_style = 'justify-content: flex-start;';
-                text_style = 'text-align: left;';
-                break;
-            case 1:
-                value_style = 'justify-content: center;';
-                text_style = 'text-align: center;';
-                break;
-            case 2:
-                value_style = 'justify-content: flex-end;';
-                text_style = 'text-align: right;';
-                break;
-            case 3:
-                value_style = 'justify-content: space-between;';
-                text_style = 'text-align: left;';
-                break;
-        }
+        let value_style = content_aligns.find(a => a.id === line.align_value).value;
+        let text_style = text_aligns.find(a => a.id === line.align_value).value;
+        // console.log(text_style)
         let value_dots_style = line.break_value ? 'flex-basis: 100%;' : '';
         text_style += line.dot_value ? 'display: list-item; margin-left: 15px' : '';
         component_html += `<div style="display: flex; ${value_style}">
             <div style="display: flex; flex-flow: wrap; ${value_style}">
                 <div class="text_value" style="margin-right: 5px; font-weight: bold;">${line.text}</div>
                 <div class="text_value" style="${value_dots_style}">${line.details}</div>
-                <div class="text_value" style="${text_style}">${line.value}</div>
+                <div class="text_value" style="flex-basis: 100%; margin-top: 0.5rem; ${text_style}">${line.value}</div>
             </div>
         </div>`
     })
@@ -143,40 +100,15 @@ function topics_component(component) {
 }
 
 function icons_component(component) {
-    let title_style = '';
-    switch (component.align_value) {
-        case 0:
-            title_style = 'justify-content: flex-start;';
-            break;
-        case 1:
-            title_style = 'justify-content: center;';
-            break;
-        case 2:
-            title_style = 'justify-content: flex-end;';
-            break;
-    }
+    let title_style = content_aligns.find(a => a.id === component.align_value).value;
     let component_html = `<div style="display: flex; flex-direction: column; width: 100%;">
         <div style="display: flex; width: 100%; ${title_style}">
             <p class="title">${component.title}</p>
         </div>
         <div style="display: flex; flex-wrap: wrap; justify-content: center;">`;
     component.list.forEach(line => {
-        let value_style = '';
-        switch (line.align_value) {
-            case 0:
-                value_style = 'justify-content: flex-start;';
-                break;
-            case 1:
-                value_style = 'justify-content: center;';
-                break;
-            case 2:
-                value_style = 'justify-content: flex-end;';
-                break;
-            case 3:
-                value_style = 'justify-content: space-between;';
-                break;
-        }
-        console.log(line.break_value)
+        let value_style = content_aligns.find(a => a.id === component.align_value).value;
+        // console.log(line.break_value)
         const show_icon = line.show_icon ? '' : 'display: none';
         const show_text = line.show_text ? '' : 'display: none';
         if(line.break_value){

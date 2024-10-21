@@ -246,7 +246,6 @@ async function getHtmlComponents(components) {
             if(component.type === 'list-icons'){
                 const component_icons = component.value
                 toHtml += icons_component(component_icons)
-                console.log(toHtml)
             }
         }
     })
