@@ -51,23 +51,23 @@ function createRouter() {
 
 
                 // Running without docker
-                const chromeOptions = {
-                    headless: true,
-                    // headless: false,
-                    defaultViewport: null,
-                    devtools: true,
-                    args: [
-                        '--no-sandbox',
-                        '--disable-setuid-sandbox',
-                    ]
-                }
-                // Running with docker
                 // const chromeOptions = {
-                //     executablePath: '/usr/bin/google-chrome',
-                //     headless: 'new',
-                //     ignoreDefaultArgs: ['--disable-extensions'],
-                //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                // };
+                //     headless: true,
+                //     // headless: false,
+                //     defaultViewport: null,
+                //     devtools: true,
+                //     args: [
+                //         '--no-sandbox',
+                //         '--disable-setuid-sandbox',
+                //     ]
+                // }
+                // Running with docker
+                const chromeOptions = {
+                    executablePath: '/usr/bin/google-chrome',
+                    headless: 'new',
+                    ignoreDefaultArgs: ['--disable-extensions'],
+                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                };
 
 
                 // we are using headless mode
