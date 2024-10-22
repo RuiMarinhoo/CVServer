@@ -7,22 +7,22 @@ const hb = require('handlebars')
 const {photo_component, text_component, skills_component, topics_component, icons_component} = require("./cv-components");
 const readFile = utils.promisify(fs.readFile)
 
-const chromeOptions = {
-    headless: true,
-    // headless: false,
-    defaultViewport: null,
-    devtools: true,
-    args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-    ]
-}
 // const chromeOptions = {
-//     executablePath: '/usr/bin/google-chrome',
-//     headless: 'new',
-//     ignoreDefaultArgs: ['--disable-extensions'],
-//     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-// };
+//     headless: true,
+//     // headless: false,
+//     defaultViewport: null,
+//     devtools: true,
+//     args: [
+//         '--no-sandbox',
+//         '--disable-setuid-sandbox',
+//     ]
+// }
+const chromeOptions = {
+    executablePath: '/usr/bin/google-chrome',
+    headless: 'new',
+    ignoreDefaultArgs: ['--disable-extensions'],
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+};
 let browser, browserWSEndpoint
 
 
