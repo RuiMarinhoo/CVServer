@@ -7,9 +7,29 @@ const hb = require('handlebars')
 const {photo_component, text_component, skills_component, topics_component, icons_component} = require("./cv-components");
 const readFile = utils.promisify(fs.readFile)
 
+const chromeOptions = {
+    headless: true,
+    // headless: false,
+    defaultViewport: null,
+    devtools: true,
+    args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+    ]
+}
+// const chromeOptions = {
+//     executablePath: '/usr/bin/google-chrome',
+//     headless: 'new',
+//     ignoreDefaultArgs: ['--disable-extensions'],
+//     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+// };
+let browser, browserWSEndpoint
+
 
 function createRouter() {
     const router = express.Router();
+
+    loadBrowser()
 
     router.post('/', async function (req, res, next) {
 
@@ -126,6 +146,8 @@ function createRouter() {
 
         const layout_cv = req.body
 
+        console.log(browserWSEndpoint)
+
         let model = layout_cv.type;
 
 
@@ -177,15 +199,18 @@ function createRouter() {
                 //     ]
                 // }
                 // Running with docker
-                const chromeOptions = {
-                    executablePath: '/usr/bin/google-chrome',
-                    headless: 'new',
-                    ignoreDefaultArgs: ['--disable-extensions'],
-                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                };
+                // const chromeOptions = {
+                //     executablePath: '/usr/bin/google-chrome',
+                //     headless: 'new',
+                //     ignoreDefaultArgs: ['--disable-extensions'],
+                //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                // };
 
                 // we are using headless mode
-                const browser = await puppeteer.launch(chromeOptions);
+                // const browser = await puppeteer.launch(chromeOptions);
+                const browser = await puppeteer.connect({
+                    browserWSEndpoint,
+                });
                 const page = await browser.newPage();
 
                 // We set the page content as the generated html by handlebars
@@ -197,7 +222,8 @@ function createRouter() {
                 // setTimeout(async () => {
                 //     await browser.close()
                 // }, 50000)
-                await browser.close()
+                // await browser.close()
+                browser.disconnect();
 
 
                 fs.unlink('example.jpg', (err) => {
@@ -271,4 +297,10 @@ function base64_encode(file) {
     var bitmap = fs.readFileSync(file);
     // convert binary data to base64 encoded string
     return new Buffer.from(bitmap).toString('base64');
+}
+
+async function loadBrowser() {
+    browser = await puppeteer.launch(chromeOptions);
+    browserWSEndpoint = browser.wsEndpoint();
+    browser.disconnect();
 }

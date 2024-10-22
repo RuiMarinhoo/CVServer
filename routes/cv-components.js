@@ -37,12 +37,15 @@ function photo_component(component) {
 }
 
 function text_component(component) {
-    let container_style = text_aligns.find(a => a.id === component.align_value).value;
+    let title_align = text_aligns.find(a => a.id === component.align_title).value;
+    let text_align = text_aligns.find(a => a.id === component.align_text).value;
     const title_style = component.show_title ? '' : 'display: none;';
     const text_style = component.show_title ? '' : 'font-size: 12pt; font-weight: bold; margin-top: 0.8rem; margin-bottom: 0.5rem;';
-    return `<div style="display: flex; flex-direction: column; width: 100%; ${container_style}">
-        <p class="title" style="${title_style}">${component.title}</p>
-        <div class="text_value" style="${text_style}">${component.value}</div>
+    return `<div style="display: flex; flex-direction: column; width: 100%;">
+        <div style="${title_align} ${title_style}">
+            <p class="title">${component.title}</p>
+        </div>
+        <div class="text_value" style="${text_align} ${text_style}">${component.value}</div>
     </div>`;
 }
 
@@ -81,21 +84,20 @@ function topics_component(component) {
             <p class="title">${component.title}</p>
         </div>`;
     component.list.forEach(line => {
-        let value_style = content_aligns.find(a => a.id === line.align_value).value;
-        let text_style = text_aligns.find(a => a.id === line.align_value).value;
+        let value_style = content_aligns.find(a => a.id === line.align_title).value;
+        let text_style = text_aligns.find(a => a.id === line.align_text).value;
         // console.log(text_style)
         let value_dots_style = line.break_value ? 'flex-basis: 100%;' : '';
         text_style += line.dot_value ? 'display: list-item; margin-left: 15px' : '';
-        component_html += `<div style="display: flex; ${value_style}">
+        component_html += `
             <div style="display: flex; flex-flow: wrap; ${value_style}">
                 <div class="text_value" style="margin-right: 5px; font-weight: bold;">${line.text}</div>
                 <div class="text_value" style="${value_dots_style}">${line.details}</div>
                 <div class="text_value" style="flex-basis: 100%; margin-top: 0.5rem; ${text_style}">${line.value}</div>
-            </div>
-        </div>`
+            </div>`
     })
     component_html += `</div>`;
-    // console.log(component_html)
+    console.log(component_html)
     return component_html;
 }
 
